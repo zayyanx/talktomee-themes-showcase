@@ -164,16 +164,10 @@ function LiquidGreenPhoneContent({ activeTheme }) {
                 </h1>
 
                 {/* Social icon row */}
-                <div className="flex items-center justify-center gap-3 mb-2">
-                    {[
-                        { icon: <Tiktok size={14} />, bg: 'bg-[#1c1a27]', color: 'text-white' },
-                        { icon: <Instagram size={14} />, bg: 'bg-gradient-to-tr from-[#fd5949] to-[#d6249f]', color: 'text-white' },
-                        { icon: <Zap size={14} />, bg: 'bg-[#4f46e5]', color: 'text-yellow-400' },
-                        { icon: <PenTool size={14} />, bg: 'bg-[#ff6719]', color: 'text-white' },
-                        { icon: <Twitter size={14} />, bg: 'bg-[#1da1f2]', color: 'text-white' },
-                    ].map((s, i) => (
-                        <button key={i} className={`w-7 h-7 rounded-full flex items-center justify-center shadow-sm ${s.bg} ${s.color}`}>
-                            {s.icon}
+                <div className="flex items-center justify-center gap-4 mb-2">
+                    {[<Tiktok size={15} />, <Instagram size={15} />, <Zap size={15} />, <PenTool size={15} />, <Twitter size={15} />].map((icon, i) => (
+                        <button key={i} className={`${activeTheme.textStyle} opacity-50 hover:opacity-100 transition-opacity`}>
+                            {icon}
                         </button>
                     ))}
                 </div>
@@ -182,56 +176,58 @@ function LiquidGreenPhoneContent({ activeTheme }) {
                     Testing the scene
                 </p>
 
-                {/* Morphing Tile Carousel */}
-                <div className="-mx-6 flex gap-3 overflow-x-auto snap-x no-scrollbar px-6"
-                    style={{ paddingBottom: expanded ? '16px' : '12px', marginBottom: expanded ? '4px' : '2px', transition: 'padding-bottom 0.4s ease, margin-bottom 0.4s ease' }}
+                {/* Morphing Tile Carousel — left edge aligned with chat bubbles */}
+                <div
+                    className={`flex gap-3 overflow-x-auto snap-x no-scrollbar ${expanded ? 'justify-start' : 'justify-center'}`}
+                    style={{
+                        paddingBottom: expanded ? '16px' : '12px',
+                        marginBottom: expanded ? '4px' : '2px',
+                        marginRight: expanded ? '-24px' : '0px',
+                        paddingRight: expanded ? '24px' : '0px',
+                        transition: 'all 0.4s ease'
+                    }}
                 >
                     {tiles.map((tile, i) => (
                         <div
                             key={i}
-                            className={`snap-start shrink-0 border border-white/20 ${activeTheme.cardBackground} overflow-hidden`}
+                            className={`snap-start shrink-0 border border-white/20 ${activeTheme.cardBackground} overflow-hidden flex flex-col`}
                             style={{
-                                width: expanded ? '148px' : '100px',
-                                borderRadius: '20px',
-                                transition: 'width 0.4s cubic-bezier(0.4,0,0.2,1), border-radius 0.4s ease',
+                                width: expanded ? '148px' : '56px',
+                                height: expanded ? '200px' : '56px',
+                                borderRadius: expanded ? '20px' : '16px',
+                                transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
                                 boxShadow: '0 2px 12px rgba(0,0,0,0.08)'
                             }}
                         >
-                            {/* Image / Icon area */}
+                            {/* Image / Icon area - 70% expanded, 100% collapsed */}
                             <div
                                 className={`w-full ${tile.iconBg} ${tile.iconColor} flex items-center justify-center`}
                                 style={{
-                                    height: expanded ? '110px' : '56px',
+                                    height: expanded ? '70%' : '100%',
                                     transition: 'height 0.4s cubic-bezier(0.4,0,0.2,1)'
                                 }}
                             >
                                 {tile.icon}
                             </div>
 
-                            {/* Text area */}
+                            {/* Body text segment - 30% expanded, 0% collapsed */}
                             <div
-                                className="px-3"
+                                className="px-3 flex flex-col justify-center overflow-hidden"
                                 style={{
-                                    paddingTop: expanded ? '10px' : '7px',
-                                    paddingBottom: expanded ? '12px' : '8px',
-                                    transition: 'padding 0.4s ease'
+                                    height: expanded ? '30%' : '0%',
+                                    opacity: expanded ? 1 : 0,
+                                    transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)'
                                 }}
                             >
-                                <p className="font-bold leading-tight" style={{ fontSize: expanded ? '13px' : '12px', transition: 'font-size 0.3s ease' }}>
-                                    {tile.label}
-                                </p>
-                                <p className="opacity-50 font-medium" style={{ fontSize: '10px' }}>
-                                    {tile.sub}
-                                </p>
-                                {/* Description — fades in when expanded */}
                                 <p
-                                    className="text-[11px] leading-snug"
+                                    className="text-sm leading-snug"
                                     style={{
-                                        opacity: expanded ? 0.6 : 0,
-                                        maxHeight: expanded ? '36px' : '0px',
-                                        marginTop: expanded ? '5px' : '0px',
+                                        opacity: expanded ? 0.75 : 0,
                                         overflow: 'hidden',
-                                        transition: 'opacity 0.35s ease, max-height 0.4s ease, margin-top 0.4s ease'
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: 'vertical',
+                                        transition: 'opacity 0.3s ease'
                                     }}
                                 >
                                     {tile.desc}
@@ -246,8 +242,15 @@ function LiquidGreenPhoneContent({ activeTheme }) {
             <div
                 ref={scrollRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto no-scrollbar px-6 pb-24 pt-3 flex flex-col gap-3 z-10 relative"
+                className="flex-1 overflow-y-auto no-scrollbar px-6 pb-24 pt-0 flex flex-col gap-3 z-10 relative"
             >
+                {/* Chat Boundary Divider — balanced spacing (approx 20px each side) */}
+                <div className={`flex items-center gap-4 mb-2 mt-4 ${activeTheme.textStyle} opacity-20`}>
+                    <div className="h-[1px] flex-1 bg-current rounded-full"></div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.25em]">Chat</span>
+                    <div className="h-[1px] flex-1 bg-current rounded-full"></div>
+                </div>
+
                 <div className="flex justify-start">
                     <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
                         Hey! What would you like to know about me? 👋
