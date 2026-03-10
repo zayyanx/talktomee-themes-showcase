@@ -11,7 +11,7 @@ export const themes = [
         coverImage: 'bg-gradient-to-br from-gray-800 to-gray-900',
         socialIconStyle: 'bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors',
         chatBubbleAIStyle: 'bg-white/80 backdrop-blur-md text-black border border-black/10 rounded-2xl rounded-bl-sm shadow-sm',
-        chatBubbleUserStyle: 'bg-black/10 backdrop-blur-md text-black rounded-2xl rounded-br-sm shadow-sm border border-black/5',
+        chatBubbleUserStyle: 'bg-[#b6ff00] text-black rounded-2xl rounded-br-sm shadow-sm border border-black/5',
         chatInputStyle: 'bg-white/60 text-black border border-black/20 rounded-full focus:outline-none focus:ring-1 focus:ring-black/50 placeholder-black/50 backdrop-blur-md',
         chatInputContainerStyle: 'bg-gradient-to-t from-white/90 via-white/50 to-transparent'
     },

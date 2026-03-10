@@ -157,24 +157,66 @@ function LiquidGreenPhoneContent({ activeTheme }) {
 
             {/* Avatar & Header Section */}
             <div className="px-6 relative w-full shrink-0 z-10 tracking-tight">
-                <div className="w-20 h-20 mx-auto rounded-full bg-gray-300 overflow-hidden mb-3 shadow-sm flex items-center justify-center shrink-0"></div>
+                <div className={`flex flex-col items-center justify-center w-full transition-all duration-500 ease-in-out`}>
+                    <div
+                        className="relative w-full transition-all duration-500 ease-in-out"
+                        style={{
+                            height: expanded ? '124px' : '40px',
+                            marginBottom: expanded ? '0' : '8px'
+                        }}
+                    >
+                        <div
+                            className="absolute rounded-full bg-gray-300 overflow-hidden shadow-sm transition-all duration-500 ease-in-out"
+                            style={{
+                                width: expanded ? '80px' : '40px',
+                                height: expanded ? '80px' : '40px',
+                                top: '0',
+                                left: '50%',
+                                transform: expanded ? 'translateX(-50%)' : 'translateX(calc(-50% - 58px))'
+                            }}
+                        ></div>
 
-                <h1 className={`${activeTheme.handleFont} ${activeTheme.textStyle} text-2xl font-bold text-center mb-2 transition-colors duration-500`}>
-                    @zzzayyan
-                </h1>
+                        <h1
+                            className={`absolute ${activeTheme.handleFont} ${activeTheme.textStyle} font-bold text-center transition-all duration-500 ease-in-out`}
+                            style={{
+                                fontSize: expanded ? '24px' : '18px',
+                                top: expanded ? '92px' : '8px',
+                                left: '50%',
+                                transform: expanded ? 'translateX(-50%)' : 'translateX(calc(-50% + 26px))',
+                                whiteSpace: 'nowrap'
+                            }}
+                        >
+                            @zzzayyan
+                        </h1>
+                    </div>
 
-                {/* Social icon row */}
-                <div className="flex items-center justify-center gap-4 mb-2">
-                    {[<Tiktok size={15} />, <Instagram size={15} />, <Zap size={15} />, <PenTool size={15} />, <Twitter size={15} />].map((icon, i) => (
-                        <button key={i} className={`${activeTheme.textStyle} opacity-50 hover:opacity-100 transition-opacity`}>
-                            {icon}
-                        </button>
-                    ))}
+                    {/* Social icon row */}
+                    <div
+                        className="flex items-center justify-center gap-4 overflow-hidden transition-all duration-500 ease-in-out w-full"
+                        style={{
+                            maxHeight: expanded ? '40px' : '0px',
+                            opacity: expanded ? 1 : 0,
+                            marginBottom: expanded ? '8px' : '0px'
+                        }}
+                    >
+                        {[<Tiktok size={15} />, <Instagram size={15} />, <Zap size={15} />, <PenTool size={15} />, <Twitter size={15} />].map((icon, i) => (
+                            <button key={i} className={`${activeTheme.textStyle} opacity-50 hover:opacity-100 transition-opacity`}>
+                                {icon}
+                            </button>
+                        ))}
+                    </div>
+
+                    <p
+                        className={`${activeTheme.textStyle} text-xs font-medium text-center overflow-hidden transition-all duration-500 ease-in-out w-full`}
+                        style={{
+                            opacity: expanded ? 0.7 : 0,
+                            maxHeight: expanded ? '24px' : '0px',
+                            marginBottom: expanded ? '16px' : '0px'
+                        }}
+                    >
+                        Testing the scene
+                    </p>
                 </div>
-
-                <p className={`${activeTheme.textStyle} text-xs font-medium opacity-70 mb-4 text-center`}>
-                    Testing the scene
-                </p>
 
                 {/* Morphing Tile Carousel — left edge aligned with chat bubbles */}
                 <div
@@ -277,8 +319,40 @@ function LiquidGreenPhoneContent({ activeTheme }) {
                     </div>
                 </div>
 
+                {/* Extra dummy messages to ensure the chat area is heavily scrollable so scroll logic fires correctly */}
+                <div className="flex justify-end mt-4">
+                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
+                        Do you also do quick design audits?
+                    </div>
+                </div>
+                <div className="flex justify-start">
+                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
+                        Absolutely! Just send me a link to your project and I'll record a quick Loom breakdown for you 🎥
+                    </div>
+                </div>
+                <div className="flex justify-end">
+                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
+                        Awesome. Also, what's your favorite theme?
+                    </div>
+                </div>
+                <div className="flex justify-start">
+                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
+                        Liquid Green, of course! It just feels so vibrant and dynamic. 🟢
+                    </div>
+                </div>
+                <div className="flex justify-end">
+                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
+                        Agreed. Looks incredible!
+                    </div>
+                </div>
+                <div className="flex justify-start">
+                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
+                        Thanks!
+                    </div>
+                </div>
+
                 {/* Suggestion Chips — scroll to bottom to see */}
-                <div className="-mx-6 flex gap-2 mt-2 overflow-x-auto no-scrollbar whitespace-nowrap px-6 pb-1">
+                <div className="-mx-6 flex gap-2 mt-2 overflow-x-auto no-scrollbar whitespace-nowrap px-6 pb-4">
                     {['Fractional CPO services', 'Fitness & training', 'Travel recs', 'Latest Projects', 'Global Adventures'].map((text, idx) => (
                         <button
                             key={idx}
@@ -302,6 +376,14 @@ function LiquidGreenPhoneContent({ activeTheme }) {
                         <Send size={15} />
                     </button>
                 </div>
+
+                {/* Branding Below Chat Box */}
+                <div className="flex justify-center mt-3 flex-col items-center gap-1 text-[#b6ff00] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] opacity-90">
+                    <p className="text-[10px] font-medium tracking-wide">
+                        Join zzayyan on <span className="font-bold">TalktoMee</span>
+                    </p>
+                </div>
+
                 <div className="w-full flex justify-center mt-3 opacity-30">
                     <div className="w-12 h-1 bg-current rounded-full"></div>
                 </div>
