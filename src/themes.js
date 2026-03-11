@@ -57,7 +57,7 @@ export const themes = [
         chatBubbleUserStyle: 'bg-white text-black rounded-2xl rounded-br-sm shadow-xl border border-white/10 px-4 py-2',
         chatInputStyle: 'bg-white/10 text-white border border-white/20 rounded-full focus:outline-none focus:ring-1 focus:ring-white/50 placeholder-white/30 backdrop-blur-xl',
         chatInputContainerStyle: 'bg-gradient-to-t from-black/95 via-black/80 to-transparent',
-        previewBg: '#0f172a'
+        previewBg: '#171717'
     },
     {
         id: 'light-cloth',
@@ -97,7 +97,7 @@ export const themes = [
         chatBubbleUserStyle: 'bg-black text-white rounded-2xl rounded-br-sm shadow-lg px-4 py-2',
         chatInputStyle: 'bg-white text-black border-2 border-black rounded-full focus:outline-none placeholder-black/40',
         chatInputContainerStyle: 'bg-gradient-to-t from-[#d4d4d4] via-[#d4d4d4]/80 to-transparent',
-        previewBg: '#334155'
+        previewBg: '#171717'
     },
     {
         id: 'minimal-light',
@@ -357,7 +357,7 @@ export const themes = [
         chatBubbleUserStyle: 'bg-yellow-400 text-black rounded-2xl rounded-br-sm border-4 border-black shadow-[4px_4px_0_black] px-4 py-2',
         chatInputStyle: 'bg-white text-black border-4 border-black rounded-full focus:outline-none placeholder-black/50',
         chatInputContainerStyle: 'bg-gradient-to-t from-[#D6D6D6] via-[#D6D6D6]/80 to-transparent',
-        previewBg: '#171717'
+        previewBg: '#262626'
     },
     {
         id: 'glassmorphism',
@@ -517,7 +517,7 @@ export const themes = [
         chatBubbleUserStyle: 'bg-[#FF1493] text-white rounded-2xl rounded-br-sm border-4 border-black shadow-[4px_4px_0_black] font-medium px-4 py-2',
         chatInputStyle: 'bg-white text-black border-4 border-black rounded-full focus:outline-none placeholder-black/40',
         chatInputContainerStyle: 'bg-gradient-to-t from-[#FFD700] via-[#FFD700]/80 to-transparent',
-        previewBg: '#000000'
+        previewBg: '#a3a3a3'
     },
     {
         id: 'bubblegum',
