@@ -1,387 +1,160 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { themes, themeCategories } from './themes';
-import { Share2, MoreHorizontal, Send, Instagram, Youtube, Twitter, Disc as Tiktok, Zap, PenTool, Calendar, Bot } from 'lucide-react';
+import { Share2, MoreHorizontal, Send, Instagram, Youtube, Twitter, Disc as Tiktok, Zap, PenTool } from 'lucide-react';
 
-function DefaultPhoneContent({ activeTheme }) {
-    return (
-        <div
-            className="relative w-full max-w-[380px] h-[800px] max-h-[90vh] rounded-[48px] overflow-hidden shadow-2xl transition-all duration-700 ease-in-out border-[8px] border-black/80 ring-4 ring-gray-900 ring-offset-2"
-            style={{
-                background: activeTheme.background,
-                backgroundSize: activeTheme.backgroundSize || 'cover',
-                backgroundPosition: 'center'
-            }}
-        >
-            {/* Top Icons */}
-            <div className="flex justify-between items-center p-6 w-full z-10 relative">
-                <button className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTheme.cardBackground}`}>
-                    <Share2 size={18} />
-                </button>
-                <button className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTheme.cardBackground}`}>
-                    <MoreHorizontal size={18} />
-                </button>
-            </div>
-
-            {/* Scrollable Content Container */}
-            <div className="absolute inset-0 pt-24 pb-24 overflow-y-auto no-scrollbar z-10 flex flex-col items-center">
-                {/* Profile Section */}
-                <div className="flex flex-col items-center mt-8 px-6 relative w-full">
-                    {/* Avatar */}
-                    <div className="w-24 h-24 rounded-full bg-gray-300 overflow-hidden mb-4 border-4 border-transparent shadow-lg flex items-center justify-center shrink-0" style={{ borderColor: activeTheme.cardBackground?.split(' ')[0]?.replace('bg-', '') || 'white' }}>
-                        {/* Empty avatar for preview */}
-                    </div>
-
-                    {/* Handle & Bio */}
-                    <h1 className={`${activeTheme.handleFont} ${activeTheme.textStyle} text-3xl font-bold mb-2 transition-colors duration-500`}>
-                        @zzzayyan
-                    </h1>
-
-                    {/* Social Icons */}
-                    <div className="flex gap-3 mb-4">
-                        <button className={`w-8 h-8 rounded-full flex items-center justify-center ${activeTheme.socialIconStyle}`}>
-                            <Twitter size={14} />
-                        </button>
-                        <button className={`w-8 h-8 rounded-full flex items-center justify-center ${activeTheme.socialIconStyle}`}>
-                            <Instagram size={14} />
-                        </button>
-                        <button className={`w-8 h-8 rounded-full flex items-center justify-center ${activeTheme.socialIconStyle}`}>
-                            <Tiktok size={14} />
-                        </button>
-                        <button className={`w-8 h-8 rounded-full flex items-center justify-center ${activeTheme.socialIconStyle}`}>
-                            <Youtube size={14} />
-                        </button>
-                    </div>
-
-                    <p className={`${activeTheme.textStyle} text-sm font-medium opacity-90 mb-8 transition-colors duration-500 text-center px-4`}>
-                        Viral Creator • Global Adventures • Ultimate Fan Experience
-                    </p>
-
-                    {/* Links */}
-                    <div className="w-full space-y-4 mb-8">
-                        {['Watch Latest Videos', 'Personal Website', 'Join the Community'].map((link, i) => (
-                            <button
-                                key={i}
-                                className={`w-full py-4 px-6 flex justify-center items-center relative group rounded-xl ${activeTheme.buttonStyle}`}
-                            >
-                                <span className="font-semibold text-[15px]">{link}</span>
-                                <MoreHorizontal size={16} className="absolute right-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Chat Input Box (Sticky at bottom inside phone frame) */}
-            <div className={`absolute bottom-0 left-0 w-full z-20 pb-6 pt-12 px-6 ${activeTheme.chatInputContainerStyle}`}>
-                {/* Subtle Suggestion Chips */}
-                <div className="-mx-6 flex gap-2 mb-4 overflow-x-auto no-scrollbar whitespace-nowrap px-6">
-                    {['Fractional CPO services', 'Fitness & training', 'Travel recs', 'Latest Projects', 'Global Adventures'].map((text, idx) => (
-                        <button
-                            key={idx}
-                            className={`px-4 py-2 rounded-full text-[11px] font-medium border transition-all hover:bg-current/10 shrink-0 ${activeTheme.textStyle} border-current/10 bg-current/5 backdrop-blur-sm shadow-sm`}
-                        >
-                            {text}
-                        </button>
-                    ))}
-                </div>
-                <div className="relative">
-                    <input
-                        type="text"
-                        placeholder="Type a message..."
-                        className={`w-full py-3 pl-4 pr-12 text-sm ${activeTheme.chatInputStyle}`}
-                    />
-                    <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
-                        <Send size={14} />
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function LiquidGreenPhoneContent({ activeTheme }) {
-    const scrollRef = useRef(null);
-    const [expanded, setExpanded] = useState(true);
-
-    const handleScroll = useCallback(() => {
-        const el = scrollRef.current;
-        if (!el) return;
-        setExpanded(el.scrollTop < 60);
-    }, []);
-
+function ThemeComponent({ activeTheme }) {
     const tiles = [
         {
             label: 'TikTok', sub: '150K+',
             desc: 'Daily videos, trends & behind-the-scenes',
-            iconBg: 'bg-[#1c1a27]', iconColor: 'text-white',
-            icon: <Tiktok size={expanded ? 26 : 20} />
+            iconBg: activeTheme.tile1Bg || 'bg-[#1c1a27]', iconColor: 'text-white',
+            icon: <Tiktok size={26} />
         },
         {
             label: 'Instagram', sub: '12K',
             desc: 'Creative work & spontaneous moments',
-            iconBg: 'bg-gradient-to-tr from-[#fd5949] to-[#d6249f]', iconColor: 'text-white',
-            icon: <Instagram size={expanded ? 26 : 20} />
+            iconBg: activeTheme.tile2Bg || 'bg-gradient-to-tr from-[#fd5949] to-[#d6249f]', iconColor: 'text-white',
+            icon: <Instagram size={26} />
         },
         {
             label: 'Alkemi Labs', sub: 'Venture Studio',
             desc: 'AI automation & product builds',
-            iconBg: 'bg-[#4f46e5]', iconColor: 'text-yellow-400',
-            icon: <Zap size={expanded ? 26 : 20} />
+            iconBg: activeTheme.tile3Bg || 'bg-[#4f46e5]', iconColor: 'text-yellow-400',
+            icon: <Zap size={26} />
         },
         {
             label: 'Substack', sub: 'Blog',
             desc: 'Essays on tech, strategy & growth',
-            iconBg: 'bg-[#ff6719]', iconColor: 'text-white',
-            icon: <PenTool size={expanded ? 26 : 20} />
+            iconBg: activeTheme.tile4Bg || 'bg-[#ff6719]', iconColor: 'text-white',
+            icon: <PenTool size={26} />
         },
     ];
 
+    // Determine branding color based on theme
+    const brandingTextColor = activeTheme.brandingColor || 'text-white';
+
     return (
         <div
-            className="relative w-full max-w-[380px] h-[800px] max-h-[90vh] rounded-[48px] overflow-hidden shadow-2xl transition-all duration-700 ease-in-out border-[8px] border-black/80 ring-4 ring-gray-900 ring-offset-2 flex flex-col"
+            className="relative w-full max-w-[420px] md:max-w-[700px] h-full max-h-[95vh] rounded-[32px] md:rounded-[48px] overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] transition-all duration-700 ease-in-out flex flex-col"
             style={{
                 background: activeTheme.background,
                 backgroundSize: activeTheme.backgroundSize || 'cover',
                 backgroundPosition: 'center'
             }}
         >
-            {/* Top Icons */}
-            <div className="flex justify-between items-center p-6 w-full z-10 relative shrink-0">
-                <button className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTheme.cardBackground}`}>
-                    <Share2 size={18} />
-                </button>
-                <button className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTheme.cardBackground}`}>
-                    <MoreHorizontal size={18} />
-                </button>
-            </div>
+            <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
 
-            {/* Avatar & Header Section */}
-            <div className="px-6 relative w-full shrink-0 z-10 tracking-tight">
-                <div className={`flex flex-col items-center justify-center w-full transition-all duration-500 ease-in-out`}>
-                    <div
-                        className="relative w-full transition-all duration-500 ease-in-out"
-                        style={{
-                            height: expanded ? '124px' : '40px',
-                            marginBottom: expanded ? '0' : '8px'
-                        }}
-                    >
-                        <div
-                            className="absolute rounded-full bg-gray-300 overflow-hidden shadow-sm transition-all duration-500 ease-in-out"
-                            style={{
-                                width: expanded ? '80px' : '40px',
-                                height: expanded ? '80px' : '40px',
-                                top: '0',
-                                left: '50%',
-                                transform: expanded ? 'translateX(-50%)' : 'translateX(calc(-50% - 58px))'
-                            }}
-                        ></div>
+            {/* Scrollable Container for everything except Input/Branding */}
+            <div className="flex-1 overflow-y-auto no-scrollbar pb-32">
 
-                        <h1
-                            className={`absolute ${activeTheme.handleFont} ${activeTheme.textStyle} font-bold text-center transition-all duration-500 ease-in-out`}
-                            style={{
-                                fontSize: expanded ? '24px' : '18px',
-                                top: expanded ? '92px' : '8px',
-                                left: '50%',
-                                transform: expanded ? 'translateX(-50%)' : 'translateX(calc(-50% + 26px))',
-                                whiteSpace: 'nowrap'
-                            }}
-                        >
-                            @zzzayyan
-                        </h1>
-                    </div>
+                {/* Header Section */}
+                <div className="pt-10 px-8 flex justify-between items-center relative z-20 mb-6">
+                    <button className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTheme.cardBackground}`}>
+                        <Share2 size={18} />
+                    </button>
+                    <button className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeTheme.cardBackground}`}>
+                        <MoreHorizontal size={18} />
+                    </button>
+                </div>
 
-                    {/* Social icon row */}
-                    <div
-                        className="flex items-center justify-center gap-4 overflow-hidden transition-all duration-500 ease-in-out w-full"
-                        style={{
-                            maxHeight: expanded ? '40px' : '0px',
-                            opacity: expanded ? 1 : 0,
-                            marginBottom: expanded ? '8px' : '0px'
-                        }}
-                    >
-                        {[<Tiktok size={15} />, <Instagram size={15} />, <Zap size={15} />, <PenTool size={15} />, <Twitter size={15} />].map((icon, i) => (
-                            <button key={i} className={`${activeTheme.textStyle} opacity-50 hover:opacity-100 transition-opacity`}>
+                <div className="px-6 flex flex-col items-center">
+                    <div className="w-24 h-24 rounded-full bg-gray-300 overflow-hidden shadow-sm mb-4"></div>
+                    <h1 className={`${activeTheme.handleFont} ${activeTheme.textStyle} text-3xl font-bold text-center mb-4`}>
+                        @zzzayyan
+                    </h1>
+
+                    <div className="flex items-center justify-center gap-4 mb-4">
+                        {[<Tiktok size={18} />, <Instagram size={18} />, <Zap size={18} />, <PenTool size={18} />, <Twitter size={18} />].map((icon, i) => (
+                            <button key={i} className={`${activeTheme.textStyle} opacity-60 hover:opacity-100 transition-opacity`}>
                                 {icon}
                             </button>
                         ))}
                     </div>
 
-                    <p
-                        className={`${activeTheme.textStyle} text-xs font-medium text-center overflow-hidden transition-all duration-500 ease-in-out w-full`}
-                        style={{
-                            opacity: expanded ? 0.7 : 0,
-                            maxHeight: expanded ? '24px' : '0px',
-                            marginBottom: expanded ? '16px' : '0px'
-                        }}
-                    >
-                        Testing the scene
+                    <p className={`${activeTheme.textStyle} text-sm font-medium text-center opacity-80 mb-8 max-w-[280px]`}>
+                        Viral Creator • Global Adventures • Fan Experience
                     </p>
                 </div>
 
-                {/* Morphing Tile Carousel — left edge aligned with chat bubbles */}
-                <div
-                    className={`flex gap-3 overflow-x-auto snap-x no-scrollbar ${expanded ? 'justify-start' : 'justify-center'}`}
-                    style={{
-                        paddingBottom: expanded ? '16px' : '12px',
-                        marginBottom: expanded ? '4px' : '2px',
-                        marginRight: expanded ? '-24px' : '0px',
-                        paddingRight: expanded ? '24px' : '0px',
-                        transition: 'all 0.4s ease'
-                    }}
-                >
-                    {tiles.map((tile, i) => (
-                        <div
-                            key={i}
-                            className={`snap-start shrink-0 border border-white/20 ${activeTheme.cardBackground} overflow-hidden flex flex-col`}
-                            style={{
-                                width: expanded ? '148px' : '56px',
-                                height: expanded ? '200px' : '56px',
-                                borderRadius: expanded ? '20px' : '16px',
-                                transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-                                boxShadow: '0 2px 12px rgba(0,0,0,0.08)'
-                            }}
-                        >
-                            {/* Image / Icon area - 70% expanded, 100% collapsed */}
+                {/* Tile Carousel */}
+                <div className="px-6 mb-8 mt-2">
+                    <div className="flex gap-4 overflow-x-auto no-scrollbar py-2 -mx-2 px-2 scroll-smooth snap-x">
+                        {tiles.map((tile, i) => (
                             <div
-                                className={`w-full ${tile.iconBg} ${tile.iconColor} flex items-center justify-center`}
-                                style={{
-                                    height: expanded ? '70%' : '100%',
-                                    transition: 'height 0.4s cubic-bezier(0.4,0,0.2,1)'
-                                }}
+                                key={i}
+                                className={`snap-start shrink-0 w-[130px] h-[200px] rounded-[24px] border border-white/10 ${activeTheme.cardBackground} overflow-hidden shadow-lg flex flex-col transition-transform hover:scale-[1.02] duration-300`}
                             >
-                                {tile.icon}
+                                <div className={`h-[70%] w-full ${tile.iconBg} ${tile.iconColor} flex items-center justify-center`}>
+                                    {tile.icon}
+                                </div>
+                                <div className="h-[30%] px-4 flex items-center">
+                                    <p className="text-xs font-semibold leading-tight line-clamp-2">
+                                        {tile.desc}
+                                    </p>
+                                </div>
                             </div>
+                        ))}
+                    </div>
+                </div>
 
-                            {/* Body text segment - 30% expanded, 0% collapsed */}
-                            <div
-                                className="px-3 flex flex-col justify-center overflow-hidden"
-                                style={{
-                                    height: expanded ? '30%' : '0%',
-                                    opacity: expanded ? 1 : 0,
-                                    transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)'
-                                }}
-                            >
-                                <p
-                                    className="text-sm leading-snug"
-                                    style={{
-                                        opacity: expanded ? 0.75 : 0,
-                                        overflow: 'hidden',
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: 'vertical',
-                                        transition: 'opacity 0.3s ease'
-                                    }}
-                                >
-                                    {tile.desc}
-                                </p>
-                            </div>
+                {/* Chat Area */}
+                <div className="px-6 flex flex-col gap-4">
+                    <div className={`flex items-center gap-4 mb-2 ${activeTheme.textStyle} opacity-20`}>
+                        <div className="h-[1px] flex-1 bg-current rounded-full"></div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.25em]">Chat</span>
+                        <div className="h-[1px] flex-1 bg-current rounded-full"></div>
+                    </div>
+
+                    <div className="flex justify-start">
+                        <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
+                            Hey! What would you like to know about me? 👋
                         </div>
-                    ))}
+                    </div>
+                    <div className="flex justify-end">
+                        <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
+                            What services do you offer?
+                        </div>
+                    </div>
+                    <div className="flex justify-start">
+                        <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
+                            I offer fractional CPO services, content strategy, and 1:1 mentorship for creators 🚀
+                        </div>
+                    </div>
+                    <div className="flex justify-end">
+                        <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
+                            How do I book a call?
+                        </div>
+                    </div>
+                    <div className="flex justify-start">
+                        <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
+                            Drop me a message here and I'll get back to you within 24 hours ✨
+                        </div>
+                    </div>
+
+                    {/* Suggestion Chips */}
+                    <div className="flex gap-2 mt-2 overflow-x-auto no-scrollbar whitespace-nowrap pb-4">
+                        {['Fractional CPO services', 'Fitness & training', 'Travel recs', 'Latest Projects'].map((text, idx) => (
+                            <button key={idx} className={`px-4 py-2 rounded-full text-[11px] font-medium border ${activeTheme.textStyle} border-current/10 bg-current/5 backdrop-blur-sm shadow-sm hover:bg-current/10 transition-colors`}>
+                                {text}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-            {/* Scrollable Chat Area */}
-            <div
-                ref={scrollRef}
-                onScroll={handleScroll}
-                className="flex-1 overflow-y-auto no-scrollbar px-6 pb-24 pt-0 flex flex-col gap-3 z-10 relative"
-            >
-                {/* Chat Boundary Divider — balanced spacing (approx 20px each side) */}
-                <div className={`flex items-center gap-4 mb-2 mt-4 ${activeTheme.textStyle} opacity-20`}>
-                    <div className="h-[1px] flex-1 bg-current rounded-full"></div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.25em]">Chat</span>
-                    <div className="h-[1px] flex-1 bg-current rounded-full"></div>
-                </div>
-
-                <div className="flex justify-start">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
-                        Hey! What would you like to know about me? 👋
-                    </div>
-                </div>
-                <div className="flex justify-end">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
-                        What services do you offer?
-                    </div>
-                </div>
-                <div className="flex justify-start">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
-                        I offer fractional CPO services, content strategy, and 1:1 mentorship for creators 🚀
-                    </div>
-                </div>
-                <div className="flex justify-end">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
-                        How do I book a call?
-                    </div>
-                </div>
-                <div className="flex justify-start">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
-                        Drop me a message here and I'll get back to you within 24 hours ✨
-                    </div>
-                </div>
-
-                {/* Extra dummy messages to ensure the chat area is heavily scrollable so scroll logic fires correctly */}
-                <div className="flex justify-end mt-4">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
-                        Do you also do quick design audits?
-                    </div>
-                </div>
-                <div className="flex justify-start">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
-                        Absolutely! Just send me a link to your project and I'll record a quick Loom breakdown for you 🎥
-                    </div>
-                </div>
-                <div className="flex justify-end">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
-                        Awesome. Also, what's your favorite theme?
-                    </div>
-                </div>
-                <div className="flex justify-start">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
-                        Liquid Green, of course! It just feels so vibrant and dynamic. 🟢
-                    </div>
-                </div>
-                <div className="flex justify-end">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleUserStyle}`}>
-                        Agreed. Looks incredible!
-                    </div>
-                </div>
-                <div className="flex justify-start">
-                    <div className={`max-w-[78%] px-4 py-2.5 text-sm leading-relaxed ${activeTheme.chatBubbleAIStyle}`}>
-                        Thanks!
-                    </div>
-                </div>
-
-                {/* Suggestion Chips — scroll to bottom to see */}
-                <div className="-mx-6 flex gap-2 mt-2 overflow-x-auto no-scrollbar whitespace-nowrap px-6 pb-4">
-                    {['Fractional CPO services', 'Fitness & training', 'Travel recs', 'Latest Projects', 'Global Adventures'].map((text, idx) => (
-                        <button
-                            key={idx}
-                            className={`px-4 py-2 rounded-full text-[11px] font-medium border transition-all hover:bg-current/10 shrink-0 ${activeTheme.textStyle} border-current/10 bg-current/5 backdrop-blur-sm shadow-sm`}
-                        >
-                            {text}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* Sticky Chat Input */}
-            <div className={`absolute bottom-0 left-0 w-full z-20 pb-6 pt-4 px-6 ${activeTheme.chatInputContainerStyle}`}>
+            {/* Sticky/Fixed Bottom Area */}
+            <div className={`absolute bottom-0 left-0 w-full z-30 pb-6 pt-8 px-6 ${activeTheme.chatInputContainerStyle}`}>
                 <div className="relative">
-                    <input
-                        type="text"
-                        placeholder="Ask anything..."
-                        className={`w-full py-3.5 pl-5 pr-12 text-[15px] font-medium ${activeTheme.chatInputStyle}`}
-                    />
-                    <button className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/20 border border-white/10 flex items-center justify-center text-white hover:bg-white/30 transition-colors backdrop-blur-md">
-                        <Send size={15} />
+                    <input type="text" placeholder="Ask anything..." className={`w-full py-4 pl-6 pr-14 text-[15px] font-medium ${activeTheme.chatInputStyle} shadow-xl`} />
+                    <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 border border-white/10 flex items-center justify-center text-white backdrop-blur-md shadow-sm active:scale-95 transition-all">
+                        <Send size={18} />
                     </button>
                 </div>
 
-                {/* Branding Below Chat Box */}
-                <div className="flex justify-center mt-3 flex-col items-center gap-1 text-[#b6ff00] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] opacity-90">
-                    <p className="text-[10px] font-medium tracking-wide">
-                        Join zzayyan on <span className="font-bold">TalktoMee</span>
-                    </p>
+                <div className="flex justify-center mt-4">
+                    <div className={`${activeTheme.brandingBubbleStyle || 'bg-black/20 backdrop-blur-md border border-white/5'} px-6 py-2 rounded-full flex items-center justify-center ${brandingTextColor} opacity-95 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-lg`}>
+                        <p className="text-[11px] font-bold tracking-widest uppercase">Join zzayyan on TalktoMee</p>
+                    </div>
                 </div>
 
                 <div className="w-full flex justify-center mt-3 opacity-30">
@@ -403,28 +176,26 @@ function App() {
         : themes.filter(t => t.category === activeCategory);
 
     return (
-        <div className="flex h-screen bg-gray-50 flex-col md:flex-row overflow-hidden">
-
+        <div className="flex h-screen bg-gray-50 flex-col md:flex-row overflow-hidden font-sans">
             {/* LEFT PANEL: The Mock Phone Profile */}
-            <div className="flex-1 flex items-center justify-center p-4 bg-gray-100 relative shadow-inner overflow-hidden">
-                {activeTheme.id === 'liquid-green'
-                    ? <LiquidGreenPhoneContent activeTheme={activeTheme} />
-                    : <DefaultPhoneContent activeTheme={activeTheme} />
-                }
+            <div
+                className="flex-1 flex items-center justify-center p-8 lg:p-12 relative shadow-inner overflow-hidden transition-colors duration-700"
+                style={{ backgroundColor: activeTheme.previewBg || '#f3f4f6' }}
+            >
+                <ThemeComponent activeTheme={activeTheme} />
             </div>
 
-            {/* RIGHT PANEL: Theme Selector (The "Linktree Admin" side) */}
+            {/* RIGHT PANEL: Theme Selector */}
             <div className="w-full md:w-[450px] lg:w-[500px] bg-white border-l border-gray-200 h-full flex flex-col shadow-xl z-20">
                 <div className="p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold text-gray-900">Appearance</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Appearance</h2>
                     <p className="text-gray-500 text-sm mt-1">Select a theme to preview your profile.</p>
                 </div>
 
-                {/* Categories */}
                 <div className="px-6 py-4 flex gap-2 overflow-x-auto border-b border-gray-100 no-scrollbar snap-x">
                     <button
                         onClick={() => setActiveCategory('All')}
-                        className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors snap-start ${activeCategory === 'All' ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                        className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all snap-start ${activeCategory === 'All' ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                     >
                         All Themes
                     </button>
@@ -432,51 +203,43 @@ function App() {
                         <button
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors snap-start ${activeCategory === cat ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                            className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all snap-start ${activeCategory === cat ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                         >
                             {cat}
                         </button>
                     ))}
                 </div>
 
-                {/* Theme Grid */}
-                <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="flex-1 overflow-y-auto p-6 bg-gray-50/50">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                         {filteredThemes.map(theme => (
                             <div
                                 key={theme.id}
                                 onClick={() => setActiveThemeId(theme.id)}
-                                className={`flex flex-col items-center cursor-pointer group`}
+                                className="flex flex-col items-center cursor-pointer group"
                             >
-                                {/* Theme Thumbnail Preview */}
                                 <div
-                                    className={`w-full aspect-[9/16] rounded-2xl mb-2 relative overflow-hidden transition-all duration-300 ${activeThemeId === theme.id ? 'ring-4 ring-blue-500 ring-offset-2 scale-[1.02]' : 'ring-1 ring-gray-200 hover:ring-gray-300'}`}
+                                    className={`w-full aspect-[9/16] rounded-2xl mb-3 relative overflow-hidden transition-all duration-300 shadow-sm ${activeThemeId === theme.id ? 'ring-4 ring-black ring-offset-2 scale-[1.05] shadow-xl z-10' : 'ring-1 ring-gray-200 hover:ring-gray-400'}`}
                                     style={{
                                         background: theme.background,
                                         backgroundSize: theme.backgroundSize || 'cover',
                                     }}
                                 >
-                                    {/* Mock content inside thumbnail */}
                                     <div className="absolute top-4 left-0 right-0 flex flex-col items-center px-4">
-                                        <div className="w-8 h-8 rounded-full bg-white/50 mb-2"></div>
-                                        <div className="w-16 h-2 bg-white/50 rounded-full mb-4"></div>
-                                        <div className={`w-full h-6 rounded-xl mb-2 ${theme.buttonStyle} border-none`}></div>
-                                        <div className={`w-full h-6 rounded-xl ${theme.buttonStyle} border-none`}></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/40 mb-2 border border-white/20"></div>
+                                        <div className="w-16 h-1 bg-white/40 rounded-full mb-4"></div>
+                                        <div className={`w-full h-5 rounded-lg mb-2 ${theme.buttonStyle} border-none`}></div>
+                                        <div className={`w-full h-5 rounded-lg ${theme.buttonStyle} border-none`}></div>
                                     </div>
                                 </div>
-
-                                <span className={`text-sm font-medium text-center line-clamp-1 ${activeThemeId === theme.id ? 'text-blue-600' : 'text-gray-700'}`}>
+                                <span className={`text-xs font-bold text-center mb-0.5 ${activeThemeId === theme.id ? 'text-black' : 'text-gray-600'}`}>
                                     {theme.name}
-                                </span>
-                                <span className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
-                                    {theme.category}
                                 </span>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }
